@@ -1,0 +1,22 @@
+{% extends 'todo_list/base.html' %}
+
+
+{% block title %}
+  Create ToDo
+{% endblock %}
+
+{% block body %}
+  <h2>Hello Django ToDo List</h2>
+
+  <h3>Add new todo</h3>
+  <div>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Add"/>
+    </form>
+  </div>
+  <div>
+    <a href="{% url 'todo-list:items-list' %}">Back to items list</a>
+  </div>
+{% endblock %}

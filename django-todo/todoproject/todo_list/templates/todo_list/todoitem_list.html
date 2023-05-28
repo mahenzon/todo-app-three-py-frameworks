@@ -1,0 +1,41 @@
+{% extends 'todo_list/base.html' %}
+
+
+{% block title %}
+  ToDo List Django
+{% endblock %}
+{% block body %}
+  <h2>Hello Django ToDo List</h2>
+
+  <a href="{% url 'todo-list:create-item' %}">Add new todo</a>
+  <div>
+    <ul>
+      {% for todo in object_list %}
+        <li>
+
+          <form
+            style="display:inline;"
+            action="{% url 'todo-list:toggle-item' pk=todo.pk %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <input type="submit" value="📐"/>
+          </form>
+
+          {{ todo.text }}
+
+          {% if todo.done %}
+            ✅
+          {% else %}
+            🔘
+          {% endif %}
+
+
+          <a href="{% url 'todo-list:delete-item' pk=todo.pk %}">
+            ❌
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
