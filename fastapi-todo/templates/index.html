@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ToDo FastAPI</title>
+</head>
+<body>
+
+<div>
+  <h3>Add new todo</h3>
+  <div>
+    <form method="post" enctype="application/x-www-form-urlencoded">
+      <label for="todo-text-id">New todo:</label>
+      <input
+        id="todo-text-id"
+        name="todo-text"
+        type="text"
+        required="required"
+      >
+      <button type="submit">Add</button>
+    </form>
+  </div>
+  <h3>Todos:</h3>
+  <ul>
+    {% for todo in todos %}
+      <li style="margin-bottom: 3px">
+
+        <form
+          style="display:inline;"
+          action="{{ url_for('toggle-todo', todo_id=todo.id) }}"
+          method="post"
+        >
+          <input type="submit" value="📐"/>
+        </form>
+
+        {{ todo.text }} {{ '✅' if todo.done else '🔘' }}
+
+        <form
+          style="display:inline;"
+          action="{{ url_for('delete-todo', todo_id=todo.id) }}"
+          method="post"
+        >
+          <input type="submit" value="❌"/>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+</body>
+</html>
