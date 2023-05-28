@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ToDo List</title>
+</head>
+<body>
+
+<div>
+  <h3>Add new todo</h3>
+  <div>
+    <form method="post">
+      <label for="todo-text-id">New todo:</label>
+      <input
+        id="todo-text-id"
+        name="todo-text"
+        type="text"
+        required="required"
+      >
+      <button type="submit">Add</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+  <h3>Todos:</h3>
+  <ul>
+    {% for todo in todos %}
+      <li style="margin-bottom: 3px">
+
+        <form
+          style="display:inline;"
+          action="{{ url_for('todo_app.toggle', todo_id=todo.id) }}"
+          method="post"
+        >
+          <input type="submit" value="📐"/>
+        </form>
+
+        {{ todo.text }} {{ '✅' if todo.done else '🔘' }}
+
+        <form
+          style="display:inline;"
+          action="{{ url_for('todo_app.delete', todo_id=todo.id) }}"
+          method="post"
+        >
+          <input type="submit" value="❌"/>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+</body>
+</html>
